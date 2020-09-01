@@ -51,3 +51,5 @@ spec:
                   key: HTTP_AUTH_PASS
             - name: RATE_LIMIT
               value: "60"
+            - name: TEMP_PATH
+              value: "/tmp/"
