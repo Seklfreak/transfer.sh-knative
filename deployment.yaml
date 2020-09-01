@@ -1,0 +1,53 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: transfer-sh
+  namespace: default
+spec:
+  template:
+    spec:
+      containers:
+        - image: dutchcoders/transfer.sh:latest
+          imagePullPolicy: Always # we use the static tag latest so we always want to pull
+          env:
+            - name: LISTENER
+              value: "8000"
+            - name: PROVIDER
+              value: "s3"
+            - name: AWS_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: transfer-sh
+                  key: AWS_ACCESS_KEY
+            - name: AWS_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: transfer-sh
+                  key: AWS_SECRET_KEY
+            - name: BUCKET
+              valueFrom:
+                secretKeyRef:
+                  name: transfer-sh
+                  key: BUCKET
+            - name: S3_ENDPOINT
+              valueFrom:
+                secretKeyRef:
+                  name: transfer-sh
+                  key: S3_ENDPOINT
+            - name: S3_REGION
+              valueFrom:
+                secretKeyRef:
+                  name: transfer-sh
+                  key: S3_REGION
+            - name: HTTP_AUTH_USER
+              valueFrom:
+                secretKeyRef:
+                  name: transfer-sh
+                  key: HTTP_AUTH_USER
+            - name: HTTP_AUTH_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: transfer-sh
+                  key: HTTP_AUTH_PASS
+            - name: RATE_LIMIT
+              value: "60"
